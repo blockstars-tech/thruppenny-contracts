@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "test": "mocha --timeout 100000",
+    "test": "mocha --exit --recursive --timeout 1000000000",
     "deploy": "ts-node ./scripts/deploy-web3.ts",
     "int-test": "mocha --timeout 15000 tests/integration/**/*.test.js --compilers js:babel-register "
   },
