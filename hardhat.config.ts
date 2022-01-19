@@ -34,23 +34,23 @@ const config: HardhatUserConfig = {
     ],
   },
   networks: {
-    hardhat: {
-      mining: {
-        auto: false,
-        interval: [12000, 15000],
-      },
-      initialBaseFeePerGas: 0, // workaround from https://github.com/sc-forks/solidity-coverage/issues/652#issuecomment-896330136 . Remove when that issue is closed.
-      accounts: {
-        mnemonic: "test test test test test test test test test test test test",
-        count: 10,
-        accountsBalance: "100000000000000000000000000",
-      },
-      forking: {
-        url: "http://10.2.10.1:9991",
-        // url: process.env.MAINNET_ALCHEMY_URL || '',
-      },
-      chainId: 1,
-    },
+    // hardhat: {
+    //   mining: {
+    //     auto: false,
+    //     interval: [12000, 15000],
+    //   },
+    //   initialBaseFeePerGas: 0, // workaround from https://github.com/sc-forks/solidity-coverage/issues/652#issuecomment-896330136 . Remove when that issue is closed.
+    //   accounts: {
+    //     mnemonic: "test test test test test test test test test test test test",
+    //     count: 10,
+    //     accountsBalance: "100000000000000000000000000",
+    //   },
+    //   forking: {
+    //     url: "http://10.2.10.1:9991",
+    //     // url: process.env.MAINNET_ALCHEMY_URL || '',
+    //   },
+    //   chainId: 1,
+    // },
     kovan: {
       url: process.env.KOVAN_URL || "",
       accounts: [
