@@ -8,13 +8,10 @@ import { task } from "hardhat/config";
 import {
   BotContract,
   BotContract__factory,
-  ERC20,
   ERC20Token,
   ERC20Token__factory,
-  UniswapV2Router02,
-  UniswapV2Router02__factory,
-  WETH9,
-  WETH9__factory,
+  IUniswapV2Router02,
+  IUniswapV2Router02__factory,
 } from "../typechain-types";
 
 const truffleAssert = require("truffle-assertions");
@@ -36,10 +33,10 @@ let user: SignerWithAddress;
 let DEXFactory: BotContract__factory;
 let DEXContract: BotContract;
 
-let UniswapRouterFactory: UniswapV2Router02__factory;
+let UniswapRouterFactory: IUniswapV2Router02__factory;
 
-let uniswapRouterInstance: UniswapV2Router02;
-let sushiswapRouterInstance: UniswapV2Router02;
+let uniswapRouterInstance: IUniswapV2Router02;
+let sushiswapRouterInstance: IUniswapV2Router02;
 
 let TokenFactory: ERC20Token__factory;
 let tokenInstance: ERC20Token;

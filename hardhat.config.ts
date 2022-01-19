@@ -1,8 +1,9 @@
 import "dotenv/config";
 import "@nomiclabs/hardhat-etherscan";
-// import "@nomiclabs/hardhat-waffle";
-import "@nomiclabs/hardhat-truffle5";
+import "@nomiclabs/hardhat-waffle";
+// import "@nomiclabs/hardhat-truffle5";
 import "@nomiclabs/hardhat-web3";
+import "@nomiclabs/hardhat-ethers";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
@@ -62,9 +63,9 @@ const config: HardhatUserConfig = {
       url: "http://127.0.0.1:9991",
     },
   },
-  typechain: {
-    target: 'truffle-v5',
-  },
+  // typechain: {
+  //   target: 'truffle-v5',
+  // },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
     currency: "USD",
