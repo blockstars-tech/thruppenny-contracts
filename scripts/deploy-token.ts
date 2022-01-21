@@ -1,11 +1,23 @@
-import { artifacts } from "hardhat";
+import { ethers } from 'hardhat';
 
-const TrupennyToken = artifacts.require("TrupennyToken");
+const { GNOSIS_SAFE_ADDRESS } = process.env;
+
+if (!GNOSIS_SAFE_ADDRESS) {
+  throw new Error('Please provide the gnosis safe address!');
+}
 
 const main = async () => {
-  const token = await TrupennyToken.new();
+  const GnosisSafeTransactionService = await ethers.getContractFactory('GnosisSafeTransactionService');
+  const contract = await GnosisSafeTransactionService.deploy(GNOSIS_SAFE_ADDRESS);
 
-  console.log("TRU address is ->", token.address);
+  await contract.deployed();
+  console.log('GnosisSafeTransactionService deployed to:', contract.address);
+
+  const TrupennyToken = await ethers.getContractFactory('TrupennyToken');
+  const token = await TrupennyToken.deploy(contract.address);
+
+  await token.deployed();
+  console.log('TrupennyToken deployed to:', token.address);
 };
 
 main()
