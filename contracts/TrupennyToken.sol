@@ -8,8 +8,8 @@ contract TrupennyToken is ERC20 {
   /**
    * Create an initial amount of tokens for the deployer.
    */
-  constructor(address gnosisSafeTransactionService) ERC20("Trupenny", "TRU") {
-    _mint(gnosisSafeTransactionService, 1000000000 * 10 ** decimals());
+  constructor(address safeAddress) ERC20("Trupenny", "TRU") {
+    _mint(safeAddress, 1000000000 * 10 ** decimals());
   }
 
   /**

@@ -7,14 +7,8 @@ if (!GNOSIS_SAFE_ADDRESS) {
 }
 
 const main = async () => {
-  const GnosisSafeTransactionService = await ethers.getContractFactory('GnosisSafeTransactionService');
-  const contract = await GnosisSafeTransactionService.deploy(GNOSIS_SAFE_ADDRESS);
-
-  await contract.deployed();
-  console.log('GnosisSafeTransactionService deployed to:', contract.address);
-
   const TrupennyToken = await ethers.getContractFactory('TrupennyToken');
-  const token = await TrupennyToken.deploy(contract.address);
+  const token = await TrupennyToken.deploy(GNOSIS_SAFE_ADDRESS);
 
   await token.deployed();
   console.log('TrupennyToken deployed to:', token.address);
