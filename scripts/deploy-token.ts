@@ -7,11 +7,11 @@ if (!GNOSIS_SAFE_ADDRESS) {
 }
 
 const main = async () => {
-  const TrupennyToken = await ethers.getContractFactory('TrupennyToken');
-  const token = await TrupennyToken.deploy(GNOSIS_SAFE_ADDRESS);
+  const ThrupennyToken = await ethers.getContractFactory('ThrupennyToken');
+  const token = await ThrupennyToken.deploy(GNOSIS_SAFE_ADDRESS);
 
   await token.deployed();
-  console.log('TrupennyToken deployed to:', token.address);
+  console.log('Thrupenny deployed to:', token.address);
 };
 
 main()

@@ -63,7 +63,9 @@ const config: HardhatUserConfig = {
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
     mainnet: {
-      url: "http://127.0.0.1:9991",
+      url: `https://rinkeby.infura.io/v3/${process.env.INFURA_KEY}`,
+      chainId: 1,
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
   },
   // typechain: {
