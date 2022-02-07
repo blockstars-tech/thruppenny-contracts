@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import { FlashLoanReceiverBase } from "./FlashLoanReceiverBase.sol";
@@ -11,7 +12,7 @@ import { ECDSA } from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 error UnprofitableTransaction(uint256 initialValue, uint256 afterValue);
 
-contract BotContract is FlashLoanReceiverBase {
+contract BotContract is FlashLoanReceiverBase, Ownable {
   using SafeERC20 for IERC20;
 
   enum SwapType {
@@ -188,19 +189,16 @@ contract BotContract is FlashLoanReceiverBase {
     address[] calldata assets,
     uint256[] calldata amounts,
     uint256[] calldata premiums,
-    address,
+    address initiator,
     bytes calldata params
   ) external override returns (bool) {
-    //
-    // This contract now has the funds requested.
-    // Your logic goes here.
-    //
+    require(msg.sender == address(LENDING_POOL), "The caller must be Lending Pool contract");
+    require(initiator == address(this), "The caller must be Lending Pool contract");
 
     // At the end of your logic above, this contract owes
     // the flashloaned amounts + premiums.
     // Therefore ensure your contract has enough to repay
     // these amounts.
-
     (uint256 balanceBefore, uint256 balanceAfter) = _executeSwaps(assets[0], amounts[0], params);
     if (balanceAfter <= balanceBefore + premiums[0]) {
       revert UnprofitableTransaction({
@@ -217,42 +215,9 @@ contract BotContract is FlashLoanReceiverBase {
     return true;
   }
 
-  function withdrawERC20(IERC20 tokenAddress, uint256 amount) public returns (bool) {
+  function withdrawERC20(IERC20 tokenAddress, uint256 amount) public onlyOwner returns (bool) {
     tokenAddress.transfer(msg.sender, amount);
     return true;
-  }
-
-  function getBalanceERC20(IERC20 tokenAddress) public view returns (uint256) {
-    return tokenAddress.balanceOf(address(this));
-  }
-
-  function recoverSigner(
-    address asset,
-    uint256 initialAmount,
-    uint256 expectedAmount,
-    uint256 slippage,
-    uint256 maxGasPrice,
-    bool isFlashloan,
-    bytes memory params,
-    bytes memory signature
-  ) public pure returns (address) {
-    bytes32 dataHash = keccak256(
-      abi.encodePacked(
-        asset,
-        initialAmount,
-        expectedAmount,
-        slippage,
-        maxGasPrice,
-        isFlashloan,
-        params
-      )
-    );
-
-    return ECDSA.recover(ECDSA.toEthSignedMessageHash(dataHash), signature);
-  }
-
-  function getWETHAddress() public pure returns (address) {
-    return UNISWAP_V2_ROUTER_02.WETH();
   }
 
   receive() external payable {
