@@ -220,6 +220,10 @@ contract BotContract is FlashLoanReceiverBase, Ownable {
     return true;
   }
 
+  function getBalanceERC20(IERC20 tokenAddress) public view returns (uint256) {
+    return tokenAddress.balanceOf(address(this));
+  }
+
   receive() external payable {
     emit Received(msg.sender, msg.value);
   }
