@@ -56,7 +56,7 @@ contract BotContract is FlashLoanReceiverBase, Ownable {
     _;
   }
 
-  function _callUniswapLikeFuncions(
+  function _callUniswapLikeFunctions(
     IUniswapV2Router02 routerAddress,
     address[] memory path,
     address asset,
@@ -101,10 +101,10 @@ contract BotContract is FlashLoanReceiverBase, Ownable {
       }
       if (swapTypes[i] == SwapType.UNISWAP) {
         address[] memory path = abi.decode(arguments[i], (address[]));
-        lastTokenInfo = _callUniswapLikeFuncions(UNISWAP_V2_ROUTER_02, path, asset, amount);
+        lastTokenInfo = _callUniswapLikeFunctions(UNISWAP_V2_ROUTER_02, path, asset, amount);
       } else if (swapTypes[i] == SwapType.SUSHISWAP) {
         address[] memory path = abi.decode(arguments[i], (address[]));
-        lastTokenInfo = _callUniswapLikeFuncions(SUSHI_V2_ROUTER_02, path, asset, amount);
+        lastTokenInfo = _callUniswapLikeFunctions(SUSHI_V2_ROUTER_02, path, asset, amount);
       }
     }
     balanceAfter = IERC20(firstAsset).balanceOf(address(this));
