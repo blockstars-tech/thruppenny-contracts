@@ -5,7 +5,7 @@
   "scripts": {
     "test": "mocha --exit --recursive --timeout 1000000000",
     "deploy": "ts-node ./scripts/deploy-web3.ts",
-    "int-test": "mocha --timeout 15000 tests/integration/**/*.test.js --compilers js:babel-register "
+    "int-test": "mocha --timeout 10000 tests/integration/**/*.test.js --compilers js:babel-register "
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.4",
@@ -41,7 +41,8 @@
     "ethers": "^5.5.3",
     "hardhat": "^2.8.2",
     "hardhat-gas-reporter": "^1.0.7",
-    "mocha": "^9.1.4",
+    "mocha": "^9.2.0",
+    "mocha-jshint": "^2.3.1",
     "prettier": "2.5.1",
     "prettier-plugin-solidity": "^1.0.0-beta.19",
     "solhint": "^3.3.6",
@@ -51,5 +52,8 @@
     "typechain": "^7.0.0",
     "typescript": "^4.5.4",
     "web3": "^1.7.0"
+  },
+  "dependencies": {
+    "@ethersproject/constants": "^5.5.0"
   }
 }

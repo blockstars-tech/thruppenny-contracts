@@ -1,4 +1,4 @@
-import "dotenv/config";
+import * as dotenv from "dotenv";
 import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-waffle";
 // import "@nomiclabs/hardhat-truffle5";
@@ -8,7 +8,15 @@ import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
 
-import { HardhatUserConfig } from "hardhat/config";
+import { HardhatUserConfig, task } from "hardhat/config";
+
+task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
+  const accounts = await hre.ethers.getSigners();
+
+  for (const account of accounts) {
+    console.log(account.address);
+  }
+});
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -45,11 +53,11 @@ const config: HardhatUserConfig = {
     //     count: 10,
     //     accountsBalance: "100000000000000000000000000",
     //   },
-    //   forking: {
-    //     url: "http://10.2.10.1:9991",
-    //     // url: process.env.MAINNET_ALCHEMY_URL || '',
-    //   },
-    //   chainId: 1,
+    forking: {
+      url: "http://10.2.10.1:9991",
+      // url: process.env.MAINNET_ALCHEMY_URL || '',
+      // chainId: 1,
+    },
     // },
     kovan: {
       url: process.env.KOVAN_URL || "",

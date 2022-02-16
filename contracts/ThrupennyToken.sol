@@ -4,12 +4,11 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract ThrupennyToken is ERC20 {
-
   /**
    * Create an initial amount of tokens.
    */
   constructor(address safeAddress) ERC20("Thrupenny", "TRU") {
-    _mint(safeAddress, 1000000000 * 10 ** decimals());
+    _mint(safeAddress, 1000000000 * 10**decimals());
   }
 
   /**

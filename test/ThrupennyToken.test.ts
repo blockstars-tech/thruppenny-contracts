@@ -3,10 +3,7 @@ import chai from "chai";
 import BN from "bn.js";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
-import {
-  ThrupennyToken,
-  ThrupennyToken__factory,
-} from "../typechain-types";
+import { ThrupennyToken, ThrupennyToken__factory } from "../typechain-types";
 
 const { expect } = chai;
 
@@ -14,7 +11,7 @@ let deployer: SignerWithAddress;
 let user1: SignerWithAddress;
 let user2: SignerWithAddress;
 
-const gnosisSafeAddress = '0xA5aA45285830a49d90a4bC3b12689C8FdEC84e32';
+const gnosisSafeAddress = "0xA5aA45285830a49d90a4bC3b12689C8FdEC84e32";
 const expectedName = "Thrupenny";
 const expectedSymbol = "TRU";
 const expectedDecimals = 8;
@@ -53,9 +50,7 @@ describe("ThrupennyToken Contract", () => {
 
   describe("Should check balance at deployment", async () => {
     it("Should mint 1000000000 *10*8 to constructor address", async function () {
-      expect(await thrupennyToken.balanceOf(gnosisSafeAddress)).to.be.equal(
-        expectedTotalSupply
-      );
+      expect(await thrupennyToken.balanceOf(gnosisSafeAddress)).to.be.equal(expectedTotalSupply);
     });
   });
 });
