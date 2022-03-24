@@ -36,6 +36,7 @@ contract TPCore is AccessControl {
     event Minted(address indexed minter, uint256 Amount);
     event Staked(address indexed staker, uint256 Amount);
     event Unstaked(address indexed staker, uint256 Amount);
+    event TPYRewarded(address indexed staker, uint256 Amount);
 
     //todo a call to change the minter and admin role for tstakingcoin
     /// Constructor
@@ -83,7 +84,6 @@ contract TPCore is AccessControl {
         strategy = IStrategy(newStrategyAddress_);
     }
 
-
     function stake(uint256 amount_) public {
         console.log("=> stake", amount_);
         
@@ -120,6 +120,8 @@ contract TPCore is AccessControl {
         console.log("usd  tot:", tot);
         uint256 user = estimateReward(_msgSender());
         console.log("usd user:", user);
+
+        emit Staked(_msgSender(), amount_);
     }
 
     function unstake(uint256 amount_) public {
@@ -158,7 +160,7 @@ contract TPCore is AccessControl {
         uint256 liquidityBalanceAnfterBurn = liquidityToken.balanceOf(_msgSender()); 
         console.log("lt balance after burn=",liquidityBalanceAnfterBurn);
 
-        emit Unstaked(_msgSender(), amount_); 
+        emit Unstaked(_msgSender(), amount_);
     }
 
 //todo dzel kotoraky
@@ -169,7 +171,7 @@ contract TPCore is AccessControl {
         
         if(liquidityToken.totalSupply() == 0)
         return 0;
-        uint256 userReward = (totalReward * liquidityToken.balanceOf(lpProvider) / liquidityToken.totalSupply() );
+        uint256 userReward = totalReward * liquidityToken.balanceOf(lpProvider) / liquidityToken.totalSupply();
         return userReward;
     }
 
@@ -193,7 +195,9 @@ contract TPCore is AccessControl {
         tpyReward = lToBurn * totalTPYAvail() / liquidityToken.totalSupply();
 
         tpy.safeTransfer(_msgSender(), tpyReward);
-        takenTPY +=tpyReward;
+        takenTPY += tpyReward;
+        
+        emit TPYRewarded(_msgSender(), tpyReward);
     }
 
     function _takeReward(uint256 amount_) private {
